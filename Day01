@@ -1,2 +1,115 @@
-sampletext
+Day1 R (Rstudio, tidyverse library).
+today´s source material: YT - Equitable Equations "Learn R in 39 minutes"
+
+
+##### Setup: #####
+
+1. Install R and Rstudio:
+  https://posit.co/download/rstudio-desktop/
+
+2. Open up a "New script":
+    a. Install.packages("tidyverse")
+    b. library("tidyverse")
+
+    (ctrl + Enter after each line to execute)
+
+##### Some tidyverse commands: #####
+
+data()                                     # pre-loaded data sets from tidyverse for practice, I will be using the one called "mpg".
+View(mpg)                                  # It will open up the mpg.csv.
+?mpg                                       #  #csvName it will display csv information. We can use ?COMMAND to show info about that command. Example: ?View.
+glimpse(mpg)                               # glimpse(csvName), it will display a top lvl information.
+
+##### filter command: #####
+?filter                                    #To get some info about the filter command.
+
+filter(mpg, cty >= 20)                     # filter(CSVname, columnName [what do we want]) // cty = city miles per gallon.
+
+We can save that into a variable:
+
+mpg_efficient <- filter(mpg, cty >= 20)    # var_Name <- filter(CSVname, columnName [what do we want])
+
+
+Now we can even see the data from that var:
+
+View(mpg_efficient)                        # View(var_Name)
+
+filtering by brand:
+
+mpg_ford <- filter(mpg, manugacturer == "ford")    # It will show all the data wich is have the "ford" name as manufacturer (manufacturer is a column from mpg.csv)
+
+##### mutate command: #####
+?mutate                                    # mutate() creates new columns that are functions of existing variables
+
+mpg_metric <- mutate(mpg, cty_metric = 0.425144 * cty)    #This line will create a dataset named "mpg_metric" wich will add a new column called "cty_metric" wich is Miles per gallon to Kilometer per liter (1 mile = 0.425144 kilometers)
+
+glimpse(mpg_metric)                        # To see the new dataset.
+
+NEW syntax, pipe = %>% (ctrl + shift + M):
+
+mpg_metric <- mpg %>%
+  mutate(cty_metric = 0.425144 * cty)
+
+
+##### group_by command: #####
+?group_by                                  # group_by() takes an existing tbl and converts it into a grouped tbl where operations are performed "by group". ungroup() removes grouping.
+
+mpg %>%
+  group_by(class) %>%
+  summarise(mean(cty),                      #summarise() creates a new data frame. It returns one row for each combination of grouping variables; if there are no grouping variables, the output will have a single row summarising all observations in the input. It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified.
+            median(cty))
+
+---------------------
+
+Command history:
+
+install.packages("tidyverse")
+library("tidyverse")
+
+data()
+View(mpg)
+?View
+
+glimpse(mpg)
+?mpg
+mpg %>% 
+  group_by(class) %>% 
+  summarise(mean(cty),
+            median(cty))
+
+mpg_gByMeanMedian <- mpg %>% 
+  group_by(class) %>% 
+  summarise(mean(cty),
+            median(cty))
+
+view(mpg_gByMeanMedian)
+
+
+ggplot(mpg, aes(x =cty)) +
+  geom_histogram()+
+  labs(x= "City milage")
+
+
+ggplot(mpg, aes(x =cty)) +
+  geom_histogram()+
+  geom_freqpoly()+
+  labs(x= "City milage")
+
+
+ggplot(mpg, aes(x = cty,
+                y = hwy))+
+  geom_point() +
+  geom_smooth(method = "lm")
+
+
+
+ggplot(mpg, aes(x = cty,
+                y = hwy,
+                color = class))+
+  geom_point()+
+  scale_color_brewer(palette = "Dark2")
+
+
+
+
 
