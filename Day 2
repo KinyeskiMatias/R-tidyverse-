@@ -1,0 +1,42 @@
+#Day 2
+data()
+View(CO2)
+?CO2
+?mean
+?CO2$uptake
+
+#Segments
+
+#Mississippi group
+mississippiGroup<- CO2 %>% 
+  filter(Type == "Mississippi")
+
+#Mississippi head
+head(mississippiGroup, n = 3)
+
+#Mississippi Chilled group
+missChilled <- mississippiGroup %>% 
+  filter(Treatment == "chilled")
+
+#Mississippi chilled uptake mean
+mean(missChilled$uptake)
+
+
+#Mississippi Nonchilled group
+missNonchilled <- mississippiGroup %>% 
+  filter(Treatment == "nonchilled")
+
+#Mississippi nonchilled meadian uptake
+median(missNonchilled$conc)
+
+
+#Quebec
+quebecGroup <- CO2 %>% 
+  filter(Type == "Quebec")
+
+#Quebec tail
+tail(quebecGroup, n= 5)
+
+#test 
+CO2 %>% 
+  filter(conc >= 250 & uptake >=26)
